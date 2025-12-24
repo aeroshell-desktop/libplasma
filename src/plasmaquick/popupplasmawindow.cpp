@@ -7,6 +7,8 @@
 
 #include <kwindoweffects.h>
 #include <kwindowsystem.h>
+#include <KConfigGroup>
+#include <KSharedConfig>
 
 #include "debug_p.h"
 #include <QGuiApplication>
@@ -57,7 +59,7 @@ PopupPlasmaWindowPrivate::PopupPlasmaWindowPrivate(PopupPlasmaWindow *_q)
  * @param anchorRect - the rect around where the popup should be placed relative to the parent window
  * @param relativePopupPosition - the final rect of the popup relative to the parent window
  *
- * This is based purely on position in preparation for being called in a wayland configure event
+ * This is based purely on position in prepartion for being called in a wayland configure event
  */
 void PopupPlasmaWindowPrivate::updateEffectivePopupDirection(const QRect &anchorRect, const QRect &relativePopupPosition)
 {
@@ -139,7 +141,6 @@ void PopupPlasmaWindowPrivate::updatePosition()
     q->setTransientParent(m_visualParent->window());
     TransientPlacementHint placementHint;
     QRectF parentAnchorRect = QRectF(m_visualParent->mapToScene(QPointF(0, 0)), m_visualParent->size());
-
     if (!m_floating) {
         QRect windowVisibleRect = m_visualParent->window()->mask().boundingRect();
         // pad parentAnchorRect to the window it's in, so that the popup appears outside the panel
@@ -156,21 +157,39 @@ void PopupPlasmaWindowPrivate::updatePosition()
         }
     }
 
-    placementHint.setParentAnchorArea(parentAnchorRect.toRect());
-    placementHint.setParentAnchor(m_popupDirection);
-    placementHint.setPopupAnchor(PlasmaQuickPrivate::oppositeEdge(m_popupDirection));
-    placementHint.setConstrainByAnchorWindow(true);
-    placementHint.setFlipConstraintAdjustments(m_floating ? Qt::Vertical : Qt::Orientations());
-    placementHint.setMargin(m_margin);
+    QRect popupPosition;
 
-    const QRect popupPosition = TransientPlacementHelper::popupRect(q, placementHint);
+    if(m_floating && q->backgroundHints() != PlasmaQuick::PlasmaWindow::StandardBackground && m_popupDirection == 0) {
 
-    QRect relativePopupPosition = popupPosition;
-    if (m_visualParent->window()) {
-        relativePopupPosition = relativePopupPosition.translated(-m_visualParent->window()->position());
+        KConfigGroup mousecfg(KSharedConfig::openConfig(QStringLiteral("kcminputrc")), QStringLiteral("Mouse"));
+        const int cursorSize  = mousecfg.readEntry(QStringLiteral("cursorSize"), 24);
+        QPoint mousePos = QCursor::pos() + QPoint(0, cursorSize*0.75);
+
+        QScreen *screen = QGuiApplication::screenAt(mousePos);
+        if (screen) {
+            const QRect screenGeometry = screen->geometry();
+            int diffX = qMax(0, mousePos.x() + popupPosition.width() - (screenGeometry.x() + screenGeometry.width()));
+            int diffY = qMax(0, mousePos.y() + popupPosition.height() - (screenGeometry.y() + screenGeometry.height()));
+            mousePos -= QPoint(diffX, diffY);
+            popupPosition = QRect(mousePos, popupPosition.size());
+        }
+    } else {
+        placementHint.setParentAnchorArea(parentAnchorRect.toRect());
+        placementHint.setParentAnchor(m_popupDirection);
+        placementHint.setPopupAnchor(PlasmaQuickPrivate::oppositeEdge(m_popupDirection));
+        placementHint.setConstrainByAnchorWindow(true);
+        placementHint.setFlipConstraintAdjustments(m_floating ? Qt::Vertical : Qt::Orientations());
+        placementHint.setMargin(m_margin);
+
+        popupPosition = TransientPlacementHelper::popupRect(q, placementHint);
+
+        QRect relativePopupPosition = popupPosition;
+        if (m_visualParent->window()) {
+            relativePopupPosition = relativePopupPosition.translated(-m_visualParent->window()->position());
+        }
+        updateEffectivePopupDirection(parentAnchorRect.toRect(), relativePopupPosition);
+        updateSlideEffect(popupPosition);
     }
-    updateEffectivePopupDirection(parentAnchorRect.toRect(), relativePopupPosition);
-    updateSlideEffect(popupPosition);
 
     if (KWindowSystem::isPlatformX11()) {
         updatePositionX11(popupPosition.topLeft());

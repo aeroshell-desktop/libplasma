@@ -8,29 +8,24 @@ import QtQuick
 import QtQuick.Layouts
 import org.kde.plasma.components as PlasmaComponents
 import org.kde.kirigami as Kirigami
+import org.kde.ksvg as KSvg
 
-/*!
- * Internal type containing the default layout of a tooltip.
- */
 Item {
     property Item toolTip
-    property int preferredTextWidth: Kirigami.Units.gridUnit * 20
+    property int preferredTextWidth: Kirigami.Units.gridUnit * 10
 
-    implicitWidth: mainLayout.implicitWidth + Kirigami.Units.largeSpacing * 2
-    implicitHeight: mainLayout.implicitHeight + Kirigami.Units.largeSpacing * 2
+    implicitWidth: mainLayout.implicitWidth
+    implicitHeight: mainLayout.implicitHeight
 
     LayoutMirroring.enabled: Qt.application.layoutDirection === Qt.RightToLeft
     LayoutMirroring.childrenInherit: true
 
-    Kirigami.Theme.colorSet: Kirigami.Theme.Window
+    Kirigami.Theme.colorSet: Kirigami.Theme.View
     Kirigami.Theme.inherit: false
 
     RowLayout {
         id: mainLayout
         anchors.centerIn: parent
-        anchors.margins: Kirigami.Units.largeSpacing
-
-        spacing: Kirigami.Units.gridUnit
 
         Image {
             source: toolTip ? toolTip.image : ""
@@ -45,6 +40,7 @@ Item {
             visible: toolTip !== null && toolTip.icon !== "" && toolTip.image === "" && valid
             Layout.preferredWidth: Kirigami.Units.iconSizes.medium
             Layout.preferredHeight: Kirigami.Units.iconSizes.medium
+            Layout.leftMargin: Kirigami.Units.smallSpacing*2
         }
 
         ColumnLayout {
@@ -52,13 +48,14 @@ Item {
             spacing: 0
 
             Kirigami.Heading {
-                level: 3
+                level: 5
                 Layout.fillWidth: true
                 elide: Text.ElideRight
                 wrapMode: Text.Wrap
                 text: toolTip ? toolTip.mainText : ""
                 textFormat: Text.PlainText
                 visible: text !== ""
+                opacity: 0.75
             }
 
             PlasmaComponents.Label {
