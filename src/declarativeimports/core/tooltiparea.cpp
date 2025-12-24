@@ -17,6 +17,7 @@
 
 #include <KSharedConfig>
 #include <KWindowEffects>
+#include <KWindowSystem>
 #include <Plasma/Applet>
 
 using namespace Qt::Literals;
@@ -34,6 +35,8 @@ ToolTipArea::ToolTipArea(QQuickItem *parent)
     , m_interactive(false)
     , m_timeout(-1)
     , m_usingDialog(false)
+    , m_backgroundHints(PlasmaQuick::PlasmaWindow::SolidBackground)
+    , m_windowTitle(QStringLiteral(""))
 {
     setAcceptHoverEvents(true);
     setFiltersChildMouseEvents(true);
@@ -150,29 +153,45 @@ void ToolTipArea::showToolTip()
     dlg->setMainItem(mainItem());
     dlg->setInteractive(m_interactive);
 
-    switch (location) {
-    case Plasma::Types::Floating:
-    case Plasma::Types::Desktop:
-    case Plasma::Types::FullScreen:
+    if(location == (Plasma::Types::Desktop | Plasma::Types::Floating)) {
         dlg->setFloating(true);
-        dlg->setPopupDirection(Qt::BottomEdge);
-        break;
-    case Plasma::Types::TopEdge:
-        dlg->setFloating(false);
-        dlg->setPopupDirection(Qt::BottomEdge);
-        break;
-    case Plasma::Types::BottomEdge:
-        dlg->setFloating(false);
-        dlg->setPopupDirection(Qt::TopEdge);
-        break;
-    case Plasma::Types::LeftEdge:
-        dlg->setFloating(false);
-        dlg->setPopupDirection(Qt::RightEdge);
-        break;
-    case Plasma::Types::RightEdge:
-        dlg->setFloating(false);
-        dlg->setPopupDirection(Qt::LeftEdge);
-        break;
+        dlg->setPopupDirection((Qt::Edge)0);
+    } else {
+        switch (location) {
+        case Plasma::Types::Desktop:
+        case Plasma::Types::FullScreen:
+        case Plasma::Types::Floating:
+            dlg->setFloating(true);
+            dlg->setPopupDirection(Qt::BottomEdge);
+            break;
+        case Plasma::Types::TopEdge:
+            dlg->setFloating(false);
+            dlg->setPopupDirection(Qt::BottomEdge);
+            break;
+        case Plasma::Types::BottomEdge:
+            dlg->setFloating(false);
+            dlg->setPopupDirection(Qt::TopEdge);
+            break;
+        case Plasma::Types::LeftEdge:
+            dlg->setFloating(false);
+            dlg->setPopupDirection(Qt::RightEdge);
+            break;
+        case Plasma::Types::RightEdge:
+            dlg->setFloating(false);
+            dlg->setPopupDirection(Qt::LeftEdge);
+            break;
+        }
+    }
+
+    dlg->setBackgroundHints(m_backgroundHints);
+    dlg->setTitle(m_windowTitle); // Wayland sees this just fine
+    // Ugly hack to make this tooltip identifiable on X11
+    if (KWindowSystem::isPlatformX11() && m_backgroundHints == PlasmaQuick::PlasmaWindow::StandardBackground) {
+        Qt::WindowFlags flags = dlg->flags();
+        dlg->setFlags(flags | Qt::Dialog);
+    } else {
+        Qt::WindowFlags flags = dlg->flags();
+        dlg->setFlags((flags & ~Qt::Dialog) | Qt::ToolTip);
     }
 
     dlg->setVisible(true);
@@ -180,6 +199,11 @@ void ToolTipArea::showToolTip()
     // showEvent won't be reached and the old timeout will still be effective.
     // Call keepalive() to make it use the new timeout.
     dlg->keepalive();
+}
+
+void ToolTipArea::setWindowTitle(QString windowTitle)
+{
+    m_windowTitle = windowTitle;
 }
 
 QString ToolTipArea::mainText() const
@@ -276,6 +300,10 @@ void ToolTipArea::setInteractive(bool interactive)
 void ToolTipArea::setTimeout(int timeout)
 {
     m_timeout = timeout;
+}
+void ToolTipArea::setBackgroundHints(PlasmaQuick::PlasmaWindow::BackgroundHints backgroundHints)
+{
+    m_backgroundHints = backgroundHints;
 }
 
 void ToolTipArea::hideToolTip()
