@@ -8,30 +8,25 @@ import QtQuick
 import QtQuick.Layouts
 import org.kde.plasma.components as PlasmaComponents
 import org.kde.kirigami as Kirigami
+import org.kde.ksvg as KSvg
 
-/*!
- * Internal type containing the default layout of a tooltip.
- */
 Item {
     id: root
     property Item toolTip
-    property int preferredTextWidth: Kirigami.Units.gridUnit * 20
+    property int preferredTextWidth: Kirigami.Units.gridUnit * 10
 
-    implicitWidth: mainLayout.implicitWidth + Kirigami.Units.largeSpacing * 2
-    implicitHeight: mainLayout.implicitHeight + Kirigami.Units.largeSpacing * 2
+    implicitWidth: mainLayout.implicitWidth
+    implicitHeight: mainLayout.implicitHeight
 
     LayoutMirroring.enabled: Application.layoutDirection === Qt.RightToLeft
     LayoutMirroring.childrenInherit: true
 
-    Kirigami.Theme.colorSet: Kirigami.Theme.Window
+    Kirigami.Theme.colorSet: Kirigami.Theme.View
     Kirigami.Theme.inherit: false
 
     RowLayout {
         id: mainLayout
         anchors.centerIn: parent
-        anchors.margins: Kirigami.Units.largeSpacing
-
-        spacing: Kirigami.Units.gridUnit
 
         Image {
             source: root.toolTip ? root.toolTip.image : ""
@@ -46,6 +41,7 @@ Item {
             visible: root.toolTip !== null && root.toolTip.icon !== "" && root.toolTip.image === "" && valid
             Layout.preferredWidth: Kirigami.Units.iconSizes.medium
             Layout.preferredHeight: Kirigami.Units.iconSizes.medium
+            Layout.leftMargin: Kirigami.Units.smallSpacing*2
         }
 
         ColumnLayout {
@@ -53,13 +49,14 @@ Item {
             spacing: 0
 
             Kirigami.Heading {
-                level: 3
+                level: 5
                 Layout.fillWidth: true
                 elide: Text.ElideRight
                 wrapMode: Text.Wrap
                 text: root.toolTip ? root.toolTip.mainText : ""
                 textFormat: Text.PlainText
                 visible: text !== ""
+                opacity: 0.75
             }
 
             PlasmaComponents.Label {

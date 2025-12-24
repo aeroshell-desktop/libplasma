@@ -10,13 +10,14 @@
 #define TOOLTIPOBJECT_H
 
 #include <Plasma/Plasma>
-
 #include <QPointer>
 #include <QQuickItem>
 #include <QTimer>
 #include <QVariant>
 
 #include <KConfigWatcher>
+
+#include "plasmawindow.h"
 
 class QQuickItem;
 class ToolTipDialog;
@@ -131,6 +132,18 @@ class ToolTipArea : public QQuickItem
      */
     Q_PROPERTY(int timeout MEMBER m_timeout WRITE setTimeout)
 
+    /**
+     * Set the background for the tooltip.
+     * By default, the solid version of the tooltip background is used.
+     */
+    Q_PROPERTY(PlasmaQuick::PlasmaWindow::BackgroundHints backgroundHints MEMBER m_backgroundHints WRITE setBackgroundHints)
+
+    /**
+     * Set the window title for the tooltip.
+     * This is used for window detection by other components such as KWin effects.
+     */
+    Q_PROPERTY(QString windowTitle MEMBER m_windowTitle WRITE setWindowTitle)
+
 public:
     explicit ToolTipArea(QQuickItem *parent = nullptr);
     ~ToolTipArea() override;
@@ -165,20 +178,25 @@ public:
 
     void setTimeout(int timeout);
 
+    void setBackgroundHints(PlasmaQuick::PlasmaWindow::BackgroundHints backgroundHints);
+
+    void setWindowTitle(QString windowTitle);
+    /// @endcond
+
 public Q_SLOTS:
 
-    /*!
+    /**
      * Shows the tooltip.
      * \since 5.73
      */
     void showToolTip();
 
-    /*!
+    /**
      * Hides the tooltip after a grace period if shown. Does not affect whether the tooltip area is active.
      */
     void hideToolTip();
 
-    /*!
+    /**
      * Hides the tooltip immediately, in comparison to hideToolTip.
      * \since 5.84
      */
@@ -202,13 +220,13 @@ Q_SIGNALS:
     void locationChanged();
     void activeChanged();
     void interactiveChanged();
-    /*!
+    /**
      * Emitted just before the tooltip dialog is shown.
      *
      * \since 5.45
      */
     void aboutToShow();
-    /*!
+    /**
      * Emitted when the tooltip's visibility changes.
      *
      * \since 5.88
@@ -236,6 +254,8 @@ private:
     bool m_interactive;
     int m_interval;
     int m_timeout;
+    PlasmaQuick::PlasmaWindow::BackgroundHints m_backgroundHints;
+    QString m_windowTitle;
 
     // ToolTipDialog is not a Q_GLOBAL_STATIC because QQuickwindows as global static
     // are deleted too late after some stuff in the qml runtime has already been deleted,

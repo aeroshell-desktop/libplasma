@@ -34,6 +34,8 @@ ToolTipDialog::ToolTipDialog()
     }
     setFlags(flags);
 
+    connect(this, &PlasmaWindow::backgroundHintsChanged, this, &ToolTipDialog::updateSize);
+
     m_hideTimer.setSingleShot(true);
     connect(&m_hideTimer, &QTimer::timeout, this, [this]() {
         setVisible(false);
