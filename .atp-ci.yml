@@ -7,7 +7,7 @@ build-job:
   stage: build
   before_script:
     - pacman-key --init
-    - pacman -Syu --needed --noconfirm ninja cmake gcc-libs glibc plasma-activities kcolorscheme kconfig kcoreaddons kglobalaccel kguiaddons ki18n kiconthemes kio kirigami knotifications kpackage ksvg kwidgetsaddons kwindowsystem libglvnd libx11 libxcb qt6-5compat qt6-base qt6-declarative wayland extra-cmake-modules kdoctools plasma-wayland-protocols
+    - pacman -Syu --needed --noconfirm ninja cmake gcc gcc-libs glibc plasma-activities kcolorscheme kconfig kcoreaddons kglobalaccel kguiaddons ki18n kiconthemes kio kirigami knotifications kpackage ksvg kwidgetsaddons kwindowsystem libglvnd libx11 libxcb qt6-5compat qt6-base qt6-declarative wayland extra-cmake-modules kdoctools plasma-wayland-protocols
   script:
     - cmake -G Ninja -DBUILD_TESTING=ON -B build . 
     - cmake --build build 
