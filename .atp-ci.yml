@@ -12,3 +12,11 @@ build-job:
   script:
     - cmake -G Ninja -DBUILD_TESTING=ON -B build . 
     - cmake --build build 
+    - DESTDIR=out cmake --install build
+  artifacts:
+    untracked: false
+    when: on_success
+    access: all
+    expire_in: 6 mos
+    paths: 
+      - out/
