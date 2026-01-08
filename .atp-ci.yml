@@ -3,7 +3,7 @@ image: "archlinux:latest"
 stages:
   - build
 
-build-job:
+build-linux-x64:
   stage: build
   before_script:
     - pacman-key --init
