@@ -176,7 +176,6 @@ private Q_SLOTS:
 
         delete applet;
     }
-
 };
 
 QTEST_MAIN(AppletTest);
