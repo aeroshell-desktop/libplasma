@@ -32,6 +32,16 @@ Item {
         imagePath: "widgets/switch"
         // FIXME
         colorSet: root.control.Kirigami.Theme.colorSet
+        onRepaintNeeded: {
+            inactive.implicitHeight = Qt.binding(() =>
+            switchSvg.hasElement("hint-bar-size")
+                ? switchSvg.elementSize("hint-bar-size").height
+                : button.implicitHeight)
+            inactive.implicitWidth = Qt.binding(() =>
+            switchSvg.hasElement("hint-bar-size")
+                ? switchSvg.elementSize("hint-bar-size").width
+                : root.implicitHeight * 2)
+        }
     }
 
     KSvg.FrameSvgItem {
@@ -53,6 +63,8 @@ Item {
         prefix: "inactive"
     }
     KSvg.FrameSvgItem {
+        // active should never show up when in inactive state (0)
+        visible: root.control.position > 0
         anchors {
             left: inactive.left
             top: inactive.top

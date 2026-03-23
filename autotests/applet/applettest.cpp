@@ -164,6 +164,7 @@ private Q_SLOTS:
 
         QVERIFY(shouldNotBeFound == applets.cend());
     }
+
     void actionsTest()
     {
         auto applet = Plasma::PluginLoader::self()->loadApplet("org.kde.plasma.testapplet");
