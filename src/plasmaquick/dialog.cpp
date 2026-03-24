@@ -62,14 +62,14 @@ public:
         , marginsEnabled(true)
         , overridingCursor(false)
         , appletInterface(nullptr)
-        , margins()
-        , componentComplete(dialog->parent() == nullptr)
         , customImagePath()
-        , needsSetupNextExpose(true)
         , shadowEnabled(true)
-        , backgroundHints(Dialog::StandardBackground)
         , shadowBordersSync(true)
         , shadowVisible(false)
+        , componentComplete(dialog->parent() == nullptr)
+        , needsSetupNextExpose(true)
+        , backgroundHints(Dialog::StandardBackground)
+        , margins()
     {
     }
 
@@ -89,6 +89,11 @@ public:
      * \since 6.6.3-aeroshell
      */
     QFlags<KSvg::FrameSvg::EnabledBorder> getShadowBorders();
+
+    // NOTE: don't call updateTheme() for shadow border syncing toggling.
+    //       Save yourself a debugging session of ~2 hours.
+    //       - catpswin56
+    void updateShadows();
 
     /*!
      * This function sets the blurBehind, background contrast and shadows. It
@@ -275,14 +280,19 @@ QFlags<KSvg::FrameSvg::EnabledBorder> DialogPrivate::getShadowBorders()
     if (avail.right() <= geom.x() + geom.width() || location == Plasma::Types::RightEdge) {
         borders = borders & ~KSvg::FrameSvg::RightBorder;
     }
-    qDebug() << geom.y() + geom.height() << avail.bottom();
     if (avail.bottom() <= geom.y() + geom.height() || location == Plasma::Types::BottomEdge) {
         borders = borders & ~KSvg::FrameSvg::BottomBorder;
     }
 
-    qDebug() << "final borders:" << (KSvg::FrameSvg::EnabledBorder)borders;
-
     return {(KSvg::FrameSvg::EnabledBorder)borders};
+}
+
+void DialogPrivate::updateShadows()
+{
+    DialogShadows::instance(dialogBackground->imagePath())->removeWindow(q);
+    if (q->isVisible() && shadowEnabled) {
+        DialogShadows::instance(dialogBackground->imagePath())->addWindow(q, getShadowBorders());
+    }
 }
 
 void DialogPrivate::updateTheme()
@@ -351,9 +361,7 @@ void DialogPrivate::updateTheme()
             hasMask = true;
             q->setMask(dialogBackground->mask());
         }
-        if (q->isVisible() && shadowEnabled) {
-            DialogShadows::instance(dialogBackground->imagePath())->addWindow(q, getShadowBorders());
-        }
+        updateShadows();
     }
 }
 
@@ -1773,7 +1781,7 @@ void Dialog::setShadowBordersSync(bool shadowBordersSync)
     }
 
     d->shadowBordersSync = shadowBordersSync;
-    d->updateTheme();
+    d->updateShadows();
     Q_EMIT shadowBordersSyncChanged();
 }
 
