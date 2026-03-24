@@ -68,7 +68,7 @@ public:
         , needsSetupNextExpose(true)
         , shadowEnabled(true)
         , backgroundHints(Dialog::StandardBackground)
-        , shadowBordersSync(false)
+        , shadowBordersSync(true)
         , shadowVisible(false)
     {
     }
