@@ -94,6 +94,13 @@ class PLASMAQUICK_EXPORT Dialog : public QQuickWindow, public QQmlParserStatus
     Q_PROPERTY(QObject *margins READ margins CONSTANT)
 
     /*!
+     * \property PlasmaQuick::Dialog::marginsEnabled
+     * Whether the background texture margins should be enabled or not.
+     * \since 6.6.3-aeroshell
+     */
+    Q_PROPERTY(bool marginsEnabled READ marginsEnabled WRITE setMarginsEnabled NOTIFY marginsEnabledChanged)
+
+    /*!
      * \property PlasmaQuick::Dialog::inset
      * Margins where the dialog background actually starts, excluiding things like shadows or borders
      * \sa DialogMargins
@@ -174,6 +181,29 @@ class PLASMAQUICK_EXPORT Dialog : public QQuickWindow, public QQmlParserStatus
      */
     Q_PROPERTY(QQuickItem *appletInterface READ appletInterface WRITE setAppletInterface NOTIFY appletInterfaceChanged)
 
+    /*!
+     * \property PlasmaQuick::Dialog::customImagePath
+     * This property holds the custom background SVG to use instead of loading one
+     * automatically. Default value is \c "".
+     * Setting this property will not affect PlasmaQuick::Dialog::backgroundHints.
+     * \since 6.6.3-aeroshell
+     */
+    Q_PROPERTY(QString customImagePath READ customImagePath WRITE setCustomImagePath NOTIFY customImagePathChanged)
+
+    /*!
+     * \property PlasmaQuick::Dialog::shadowEnabled
+     * Whether the shadow should be rendered or not. Default value is \c true.
+     * \since 6.6.3-aeroshell
+     */
+    Q_PROPERTY(bool shadowEnabled READ shadowEnabled WRITE setShadowEnabled NOTIFY shadowEnabledChanged)
+
+    /*!
+     * \property PlasmaQuick::Dialog::shadowBordersSync
+     * Whether the shadow's borders should follow the background's enabled borders. Default value is \c true.
+     * \since 6.6.3-aeroshell
+     */
+    Q_PROPERTY(bool shadowBordersSync READ shadowBordersSync WRITE setShadowBordersSync NOTIFY shadowBordersSyncChanged)
+
     Q_CLASSINFO("DefaultProperty", "mainItem")
 
 public:
@@ -211,6 +241,10 @@ public:
     void setLocation(Plasma::Types::Location location);
 
     QObject *margins() const;
+
+    bool marginsEnabled() const;
+    void setMarginsEnabled(bool marginsEnabled);
+
     QObject *inset() const;
 
     void setFramelessFlags(Qt::WindowFlags flags);
@@ -236,6 +270,15 @@ public:
     QQuickItem *appletInterface() const;
     void setAppletInterface(QQuickItem *appletInterface);
 
+    QString customImagePath() const;
+    void setCustomImagePath(QString customImagePath);
+
+    bool shadowEnabled() const;
+    void setShadowEnabled(bool shadowEnabled);
+
+    bool shadowBordersSync() const;
+    void setShadowBordersSync(bool shadowBordersSync);
+
     /*!
      * Returns the suggested screen position for the popup.
      *
@@ -249,6 +292,7 @@ Q_SIGNALS:
     void mainItemChanged();
     void locationChanged();
     void visualParentChanged();
+    void marginsEnabledChanged();
     void typeChanged();
     void hideOnWindowDeactivateChanged();
     void outputOnlyChanged();
@@ -257,6 +301,9 @@ Q_SIGNALS:
     void backgroundHintsChanged();
     void visibleChangedProxy(); // redeclaration of QQuickWindow::visibleChanged
     void appletInterfaceChanged();
+    void customImagePathChanged();
+    void shadowEnabledChanged();
+    void shadowBordersSyncChanged();
     /*!
      * Emitted when the hideOnWindowDeactivate property is \c true and this dialog lost focus to a
      * window that is neither a parent dialog to nor a child dialog of this dialog.
