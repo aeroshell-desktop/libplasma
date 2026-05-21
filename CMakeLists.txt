@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.16)
 
-set(PROJECT_VERSION "6.6.5")
+set(PROJECT_VERSION "6.6.90")
 project(libplasma VERSION ${PROJECT_VERSION})
 
 set(QT_MIN_VERSION "6.10.0")
-set(PROJECT_DEP_VERSION "6.6.5")
-set(KF6_MIN_VERSION "6.22.0")
+set(PROJECT_DEP_VERSION "6.6.90")
+set(KF6_MIN_VERSION "6.24.0")
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -25,16 +25,13 @@ include(ECMGenerateHeaders)
 include(CMakePackageConfigHelpers)
 include(ECMSetupVersion)
 include(ECMQtDeclareLoggingCategory)
-include(ECMAddQch)
 include(KDEPackageAppTemplates)
 include(ECMGenerateQmlTypes)
 include(ECMMarkNonGuiExecutable)
 include(ECMDeprecationSettings)
 include(ECMQmlModule)
 include(ECMGenerateQDoc)
-
-option(BUILD_QCH "Build API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)" OFF)
-add_feature_info(QCH ${BUILD_QCH} "API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)")
+include(ECMFindQmlModule)
 
 ecm_setup_version(PROJECT
                   VARIABLE_PREFIX PLASMA
@@ -47,7 +44,7 @@ ecm_setup_version(PROJECT
 find_package(Qt6 ${QT_MIN_VERSION} REQUIRED NO_MODULE COMPONENTS Quick Gui Qml Svg QuickControls2 DBus)
 
 if (Qt6Gui_VERSION VERSION_GREATER_EQUAL "6.10.0")
-    find_package(Qt6GuiPrivate ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE)
+    find_package(Qt6GuiPrivate ${QT_MIN_VERSION} REQUIRED NO_MODULE)
 endif()
 
 find_package(KF6 ${KF6_MIN_VERSION} REQUIRED
@@ -72,6 +69,7 @@ find_package(PlasmaActivities REQUIRED ${PROJECT_DEP_VERSION})
 find_package(PlasmaWaylandProtocols 1.10.0 REQUIRED)
 find_package(Qt6WaylandClient ${QT_MIN_VERSION} REQUIRED CONFIG)
 find_package(Wayland 1.9 REQUIRED Client)
+find_package(WaylandProtocols 1.46 REQUIRED)
 
 option(WITHOUT_X11 "Build without X11 support (skips finding X11)." OFF)
 if(NOT WITHOUT_X11)
@@ -125,11 +123,17 @@ else()
     message(STATUS "OpenGL::EGL is not available")
 endif()
 
+ecm_find_qmlmodule(Qt5Compat.GraphicalEffects REQUIRED)
+
+ecm_find_qmlmodule(org.kde.config REQUIRED)
+ecm_find_qmlmodule(org.kde.kirigami REQUIRED)
+ecm_find_qmlmodule(org.kde.ksvg REQUIRED)
+
 #########################################################################
 
 ecm_set_disabled_deprecation_versions(
-    QT 6.9.0
-    KF 6.16.0
+    QT 6.11.0
+    KF 6.23.0
 )
 
 #add_definitions(-Wno-deprecated)
@@ -156,6 +160,9 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 ################# list the subdirectories #################
 add_definitions(-DTRANSLATION_DOMAIN=\"libplasma6\")
+add_definitions(
+    -DQT_NO_CONTEXTLESS_CONNECT
+)
 ki18n_install(po)
 add_subdirectory(src)
 
@@ -174,16 +181,6 @@ add_subdirectory(templates)
 # create a Config.cmake and a ConfigVersion.cmake file and install them
 
 set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/Plasma")
-
-if (BUILD_QCH)
-    ecm_install_qch_export(
-        TARGETS Plasma_QCH
-        FILE PlasmaQchTargets.cmake
-        DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
-        COMPONENT Devel
-    )
-    set(PACKAGE_INCLUDE_QCHTARGETS "include(\"\${CMAKE_CURRENT_LIST_DIR}/PlasmaQchTargets.cmake\")")
-endif()
 
 configure_package_config_file(
   "${CMAKE_CURRENT_SOURCE_DIR}/PlasmaConfig.cmake.in"

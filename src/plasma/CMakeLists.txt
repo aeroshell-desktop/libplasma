@@ -53,13 +53,10 @@ target_sources(Plasma PRIVATE
     private/blureffectwatcher_p.h
 )
 
-if (Qt6_VERSION VERSION_GREATER_EQUAL "6.8.0")
-    set(private_code_option  "PRIVATE_CODE")
-endif()
 qt6_generate_wayland_protocol_client_sources(Plasma
-    ${private_code_option}
+    PRIVATE_CODE
     FILES
-        ${PLASMA_WAYLAND_PROTOCOLS_DIR}/blur.xml
+        ${WaylandProtocols_DATADIR}/staging/ext-background-effect/ext-background-effect-v1.xml
 )
 
 ecm_qt_declare_logging_category(Plasma
@@ -153,31 +150,3 @@ install(
 )
 
 install(TARGETS Plasma EXPORT PlasmaTargets ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
-
-if(BUILD_QCH)
-    ecm_add_qch(
-        Plasma_QCH
-        NAME Plasma
-        BASE_NAME Plasma
-        VERSION ${PLASMA_VERSION}
-        ORG_DOMAIN org.kde
-        SOURCES # using only public headers, to cover only public API
-            ${Plasma_HEADERS}
-            Mainpage.dox
-        MD_MAINPAGE "${CMAKE_SOURCE_DIR}/README.md"
-        LINK_QCHS
-            Qt6Gui_QCH
-            KF6Service_QCH
-            KF6Package_QCH
-        INCLUDE_DIRS
-            ${Plasma_BUILD_INCLUDE_DIRS}
-        BLANK_MACROS
-            PLASMA_EXPORT
-            PLASMA_DEPRECATED
-            PLASMA_DEPRECATED_EXPORT
-            "PLASMA_DEPRECATED_VERSION(x, y, t)"
-        TAGFILE_INSTALL_DESTINATION ${KDE_INSTALL_QTQCHDIR}
-        QCH_INSTALL_DESTINATION ${KDE_INSTALL_QTQCHDIR}
-        COMPONENT Devel
-    )
-endif()

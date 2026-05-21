@@ -1,10 +1,10 @@
 /*
-    SPDX-FileCopyrightText: 2011 Marco Martin <mart@kde.org>
-    SPDX-FileCopyrightText: 2011 Artur Duque de Souza <asouza@kde.org>
-    SPDX-FileCopyrightText: 2013 Sebastian Kügler <sebas@kde.org>
-
-    SPDX-License-Identifier: GPL-2.0-or-later
-*/
+ *    SPDX-FileCopyrightText: 2011 Marco Martin <mart@kde.org>
+ *    SPDX-FileCopyrightText: 2011 Artur Duque de Souza <asouza@kde.org>
+ *    SPDX-FileCopyrightText: 2013 Sebastian Kügler <sebas@kde.org>
+ *
+ *    SPDX-License-Identifier: GPL-2.0-or-later
+ */
 
 #ifndef TOOLTIPOBJECT_H
 #define TOOLTIPOBJECT_H
