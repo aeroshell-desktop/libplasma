@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.16)
 
-set(PROJECT_VERSION "6.7.5")
+set(PROJECT_VERSION "6.7.91")
 project(libplasma VERSION ${PROJECT_VERSION})
 
-set(QT_MIN_VERSION "6.10.0")
-set(PROJECT_DEP_VERSION "6.7.0")
-set(KF6_MIN_VERSION "6.26.0")
+set(QT_MIN_VERSION "6.11.0")
+set(PROJECT_DEP_VERSION "6.7.91")
+set(KF6_MIN_VERSION "6.30.0")
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -33,19 +33,19 @@ include(ECMQmlModule)
 include(ECMGenerateQDoc)
 include(ECMFindQmlModule)
 
+option(ENABLE_ACTIVITIES "Enable support for Plasma Activities in containments" ON)
+
 ecm_setup_version(PROJECT
                   VARIABLE_PREFIX PLASMA
                   VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/plasma_version.h"
                   PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/PlasmaConfigVersion.cmake"
-                  SOVERSION 7)
+                  SOVERSION 8)
 
 ################# now find all used packages #################
 
 find_package(Qt6 ${QT_MIN_VERSION} REQUIRED NO_MODULE COMPONENTS Quick Gui Qml Svg QuickControls2 DBus)
 
-if (Qt6Gui_VERSION VERSION_GREATER_EQUAL "6.10.0")
-    find_package(Qt6GuiPrivate ${QT_MIN_VERSION} REQUIRED NO_MODULE)
-endif()
+find_package(Qt6GuiPrivate ${QT_MIN_VERSION} REQUIRED NO_MODULE)
 
 find_package(KF6 ${KF6_MIN_VERSION} REQUIRED
     COMPONENTS
@@ -63,7 +63,6 @@ find_package(KF6 ${KF6_MIN_VERSION} REQUIRED
         Svg
         ColorScheme
 )
-find_package(PlasmaActivities REQUIRED ${PROJECT_DEP_VERSION})
 
 # Wayland features
 find_package(PlasmaWaylandProtocols 1.10.0 REQUIRED)
@@ -71,56 +70,8 @@ find_package(Qt6WaylandClient ${QT_MIN_VERSION} REQUIRED CONFIG)
 find_package(Wayland 1.9 REQUIRED Client)
 find_package(WaylandProtocols 1.46 REQUIRED)
 
-option(WITHOUT_X11 "Build without X11 support (skips finding X11)." OFF)
-if(NOT WITHOUT_X11)
-    #optional features
-    find_package(X11 MODULE)
-    set_package_properties(X11 PROPERTIES DESCRIPTION "X11 libraries"
-                        URL "https://www.x.org/"
-                        TYPE OPTIONAL
-                        )
-    find_package(XCB MODULE COMPONENTS XCB COMPOSITE DAMAGE XFIXES RENDER)
-    set_package_properties(XCB PROPERTIES DESCRIPTION "X protocol C-language Binding"
-                        URL "https://xcb.freedesktop.org/"
-                        TYPE OPTIONAL
-                        )
-    if(X11_FOUND AND XCB_XCB_FOUND)
-        set(HAVE_X11 1)
-        #X11_Xrender discovery is done by FindX11
-        #add_feature_info("X Rendering Extension (libXrender)" X11_Xrender_FOUND "Support for compositing, rendering operations, and alpha-blending. STRONGLY RECOMMENDED")
-    else()
-        set(HAVE_X11 0)
-    endif()
-endif()
-
-find_package(OpenGL)
-set_package_properties(OpenGL PROPERTIES DESCRIPTION "The OpenGL libraries"
-                       URL "https://www.opengl.org/"
-                       TYPE OPTIONAL
-                      )
-
-find_package(EGL)
-set_package_properties(EGL PROPERTIES
-                       PURPOSE "Fallback when OpenGL not available because of missing GLVND"
-                       TYPE OPTIONAL
-                      )
-
-get_target_property(QtGui_Enabled_Features Qt6::Gui QT_ENABLED_PUBLIC_FEATURES)
-if(OpenGL_GLX_FOUND AND HAVE_X11 AND (QtGui_Enabled_Features MATCHES "opengl"))
-    add_feature_info(GLX OpenGL_GLX_FOUND "OpenGL GLX libraries.")
-    set(HAVE_GLX 1)
-else()
-    set(HAVE_GLX 0)
-endif()
-
-# OpenGL_EGL_FOUND is defined by FindOpenGL
-if(TARGET OpenGL::EGL)
-    add_feature_info(EGL OpenGL_EGL_FOUND
-                     "A platform-agnostic mechanism for creating rendering surfaces for use with other graphics libraries, such as OpenGL|ES and OpenVG.")
-    set(HAVE_EGL 1)
-else()
-    set(HAVE_EGL 0)
-    message(STATUS "OpenGL::EGL is not available")
+if(ENABLE_ACTIVITIES)
+    find_package(PlasmaActivities ${PROJECT_DEP_VERSION} REQUIRED)
 endif()
 
 ecm_find_qmlmodule(Qt5Compat.GraphicalEffects REQUIRED)
@@ -133,7 +84,7 @@ ecm_find_qmlmodule(org.kde.ksvg REQUIRED)
 
 ecm_set_disabled_deprecation_versions(
     QT 6.11.0
-    KF 6.23.0
+    KF 6.27.0
 )
 
 #add_definitions(-Wno-deprecated)

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libplasma\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-06-02 03:54+0000\n"
-"PO-Revision-Date: 2026-04-01 09:46-0400\n"
+"POT-Creation-Date: 2026-09-26 03:00+0000\n"
+"PO-Revision-Date: 2026-05-31 20:21-0400\n"
 "Last-Translator: Abduqadir Abliz <sahranbay@gmail.com>\n"
 "Language-Team: Uyghur <kde-i18n-doc@kde.org>\n"
 "Language: ug\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 
 #: declarativeimports/plasmaextracomponents/qml/BasicPlasmoidHeading.qml:82
 #, kde-format
@@ -27,7 +27,7 @@ msgstr "تېخىمۇ كۆپ مەشغۇلات"
 #, kde-format
 msgctxt "@action:button"
 msgid "Show Contextual Help"
-msgstr ""
+msgstr "مۇناسىۋەتلىك ياردەمنى كۆرسەت"
 
 #: declarativeimports/plasmaextracomponents/qml/ExpandableListItem.qml:587
 #, kde-format
@@ -46,6 +46,24 @@ msgstr "ياي"
 msgid "Password"
 msgstr "ئىم"
 
+#: declarativeimports/plasmaextracomponents/qml/PasswordField.qml:57
+#, fuzzy, kde-format
+#| msgid "Password"
+msgctxt ""
+"@action:button in text field, tooltip/accessible only, displays placeholders "
+"for characters"
+msgid "Hide Password"
+msgstr "ئىم"
+
+#: declarativeimports/plasmaextracomponents/qml/PasswordField.qml:58
+#, fuzzy, kde-format
+#| msgid "Password"
+msgctxt ""
+"@action:button in text field, tooltip/accessible only, reveals password "
+"chracters"
+msgid "Show Password"
+msgstr "ئىم"
+
 #: declarativeimports/plasmaextracomponents/qml/SearchField.qml:62
 #, kde-format
 msgid "Search…"
@@ -61,44 +79,44 @@ msgstr "ئىزدە"
 msgid "Clear search"
 msgstr "ئىزدەشنى تازىلا"
 
-#: plasma/applet.cpp:318
+#: plasma/applet.cpp:296
 #, kde-format
 msgid "Unknown"
 msgstr "يوچۇن"
 
-#: plasma/applet.cpp:764
+#: plasma/applet.cpp:742
 #, kde-format
 msgid "Activate %1 Widget"
 msgstr "%1 ئەپچىنى ئاكتىپلا"
 
-#: plasma/containment.cpp:100 plasma/private/applet_p.cpp:100
+#: plasma/containment.cpp:102 plasma/private/applet_p.cpp:98
 #, kde-format
 msgctxt "%1 is the name of the applet"
 msgid "Remove %1"
 msgstr "%1 نى چىقىرىۋەت"
 
-#: plasma/containment.cpp:106 plasma/corona.cpp:365 plasma/corona.cpp:486
+#: plasma/containment.cpp:108 plasma/corona.cpp:314 plasma/corona.cpp:435
 #, kde-format
 msgid "Enter Edit Mode"
 msgstr "تەھرىرلەش ھالىتىگە كىرىدۇ"
 
-#: plasma/containment.cpp:109 plasma/private/applet_p.cpp:105
+#: plasma/containment.cpp:111 plasma/private/applet_p.cpp:103
 #, kde-format
 msgctxt "%1 is the name of the applet"
 msgid "Configure %1..."
 msgstr "%1 نى سەپلە…"
 
-#: plasma/corona.cpp:314 plasma/corona.cpp:471
+#: plasma/corona.cpp:263 plasma/corona.cpp:420
 #, kde-format
 msgid "Lock Widgets"
 msgstr "ئەپچە قۇلۇپلا"
 
-#: plasma/corona.cpp:314
+#: plasma/corona.cpp:263
 #, kde-format
 msgid "Unlock Widgets"
 msgstr "ئەپچە قۇلۇپىنى ئاچ"
 
-#: plasma/corona.cpp:363
+#: plasma/corona.cpp:312
 #, kde-format
 msgid "Exit Edit Mode"
 msgstr "تەھرىرلەش ھالىتىدىن چېكىنىدۇ"
@@ -108,203 +126,196 @@ msgstr "تەھرىرلەش ھالىتىدىن چېكىنىدۇ"
 msgid "Could not find requested component: %1"
 msgstr "لازىملىق بۆلەكنى تاپالمىدى: %1"
 
-#: plasma/private/applet_p.cpp:118
+#: plasma/private/applet_p.cpp:116
 #, kde-format
 msgid "Show Alternatives..."
 msgstr "ئالمىشىدىغاننى كۆرسەت…"
 
-#: plasma/private/applet_p.cpp:236
+#: plasma/private/applet_p.cpp:234
 #, kde-format
 msgid "Widget Removed"
 msgstr "ئەپچە چىقىرىۋېتىلدى"
 
-#: plasma/private/applet_p.cpp:237
+#: plasma/private/applet_p.cpp:235
 #, kde-format
 msgid "The widget \"%1\" has been removed."
 msgstr "«%1» ئەپچە چىقىرىۋېتىلگەن."
 
-#: plasma/private/applet_p.cpp:241
+#: plasma/private/applet_p.cpp:239
 #, kde-format
 msgid "Panel Removed"
 msgstr "كۆزنەكچە چىقىرىۋېتىلدى"
 
-#: plasma/private/applet_p.cpp:242
+#: plasma/private/applet_p.cpp:240
 #, kde-format
 msgid "A panel has been removed."
 msgstr "كۆزنەكچە چىقىرىۋېتىلگەن."
 
-#: plasma/private/applet_p.cpp:245
+#: plasma/private/applet_p.cpp:243
 #, kde-format
 msgid "Desktop Removed"
 msgstr "ئۈستەلئۈستى چىقىرىۋېتىلدى"
 
-#: plasma/private/applet_p.cpp:246
+#: plasma/private/applet_p.cpp:244
 #, kde-format
 msgid "A desktop has been removed."
 msgstr "ئۈستەلئۈستى چىقىرىۋېتىلگەن."
 
-#: plasma/private/applet_p.cpp:249
+#: plasma/private/applet_p.cpp:247
 #, kde-format
 msgid "Undo"
 msgstr "يېنىۋال"
 
-#: plasma/private/applet_p.cpp:319
+#: plasma/private/applet_p.cpp:317
 #, kde-format
 msgid "Widget Settings"
 msgstr "ئەپچە تەڭشەك"
 
-#: plasma/private/applet_p.cpp:325
+#: plasma/private/applet_p.cpp:323
 #, kde-format
 msgid "Remove this Widget"
 msgstr "ئەپچىنى چىقىرىۋەت"
 
-#: plasma/private/containment_p.cpp:51
+#: plasma/private/containment_p.cpp:54
 #, kde-format
 msgid "Remove this Panel"
 msgstr "بۇ كۆزنەكچىنى چىقىرىۋەت"
 
-#: plasma/private/containment_p.cpp:53
+#: plasma/private/containment_p.cpp:56
 #, kde-format
 msgid "Remove this Activity"
 msgstr "بۇ پائالىيەتنى چىقىرىۋەت"
 
-#: plasma/private/containment_p.cpp:58
+#: plasma/private/containment_p.cpp:61
 #, kde-format
 msgid "Activity Settings"
 msgstr "پائالىيەت تەڭشىكى"
 
-#: plasma/private/containment_p.cpp:70
+#: plasma/private/containment_p.cpp:73
 #, kde-format
 msgid "Add or Manage Widgets…"
 msgstr "ئەپچە قوش ياكى باشقۇر…"
 
-#: plasmaquick/appletquickitem.cpp:540
+#: plasmaquick/appletquickitem.cpp:548
 #, kde-format
 msgid "The root item of %1 must be of type ContainmentItem"
 msgstr "%1 نىڭ غول تۈرى چوقۇم ContainmentItem بولۇشى كېرەك"
 
-#: plasmaquick/appletquickitem.cpp:545
+#: plasmaquick/appletquickitem.cpp:553
 #, kde-format
 msgid "The root item of %1 must be of type PlasmoidItem"
 msgstr "%1 نىڭ غول تۈرى چوقۇم PlasmoidItem بولۇشى كېرەك"
 
-#: plasmaquick/appletquickitem.cpp:553
+#: plasmaquick/appletquickitem.cpp:561
 #, kde-format
 msgid "Unknown Applet"
 msgstr "يوچۇن قوللانچاق"
 
-#: plasmaquick/appletquickitem.cpp:567
-#, fuzzy, kde-format
-#| msgid ""
-#| "This Widget was written for an unknown older version of Plasma and is not "
-#| "compatible with Plasma %1. Please contact the widget's author for an "
-#| "updated version."
+#: plasmaquick/appletquickitem.cpp:575
+#, kde-format
 msgid ""
 "This widget was written for an unknown older version of Plasma and is not "
 "compatible with Plasma %1. Please contact the widget's author for an updated "
 "version."
 msgstr ""
-"بۇ ئەپچە يوچۇن كونا نەشرىدىكى Plasma غا يېزىلغان، ئۇ Plasma %1 بىلەن "
-"ماسلاشمايدۇ. ئەپچە يازغۇچىسى بىلەن ئالاقىلىشىپ يېڭى نەشرىگە ئېرىشىڭ."
 
-#: plasmaquick/appletquickitem.cpp:570 plasmaquick/appletquickitem.cpp:577
-#: plasmaquick/appletquickitem.cpp:583
+#: plasmaquick/appletquickitem.cpp:578 plasmaquick/appletquickitem.cpp:585
+#: plasmaquick/appletquickitem.cpp:591
 #, kde-format
 msgid "%1 is not compatible with Plasma %2"
 msgstr "%1 بىلەن Plasma %2 ماسلاشمايدۇ"
 
-#: plasmaquick/appletquickitem.cpp:574
-#, fuzzy, kde-format
-#| msgid ""
-#| "This Widget was written for Plasma %1 and is not compatible with Plasma "
-#| "%2. Please contact the widget's author for an updated version."
+#: plasmaquick/appletquickitem.cpp:582
+#, kde-format
 msgid ""
 "This widget was written for Plasma %1 and is not compatible with Plasma %2. "
 "Please contact the widget's author for an updated version."
 msgstr ""
-"بۇ ئەپچە Plasma %1 غا يېزىلغان، ئۇ Plasma %2‎‏ بىلەن ماسلاشمايدۇ. ئەپچە "
-"يازغۇچىسى بىلەن ئالاقىلىشىپ يېڭى نەشرىگە ئېرىشىڭ."
 
-#: plasmaquick/appletquickitem.cpp:580
-#, fuzzy, kde-format
-#| msgid ""
-#| "This Widget was written for Plasma %1 and is not compatible with Plasma "
-#| "%2. Please update Plasma in order to use the widget."
+#: plasmaquick/appletquickitem.cpp:588
+#, kde-format
 msgid ""
 "This widget was written for Plasma %1 and is not compatible with Plasma %2. "
 "Please update Plasma in order to use the widget."
 msgstr ""
-"بۇ ئەپچە Plasma %1 غا يېزىلغان، ئۇ Plasma %2‎‏ بىلەن ماسلاشمايدۇ. بۇ ئەپچىنى "
-"ئىشلىتىش ئۈچۈن Plasma نى يېڭىلاڭ."
 
-#: plasmaquick/appletquickitem.cpp:589 plasmaquick/appletquickitem.cpp:611
+#: plasmaquick/appletquickitem.cpp:597 plasmaquick/appletquickitem.cpp:620
 #, kde-format
 msgid "Sorry! There was an error loading %1."
 msgstr "كەچۈرۈڭ! %1 نى يۈكلىگەندە خاتالىق كۆرۈلگەن."
 
-#: plasmaquick/appletquickitem.cpp:606
+#: plasmaquick/appletquickitem.cpp:614
 #, kde-format
 msgid "Error loading QML file: %1 %2"
 msgstr "QML ھۆججەتنى يۈكلەۋاتقاندا خاتالىق كۆرۈلدى: %1 %2"
 
-#: plasmaquick/appletquickitem.cpp:609
+#: plasmaquick/appletquickitem.cpp:618
 #, kde-format
 msgid "Error loading Applet: package %1 does not exist."
 msgstr "ئەپچە يۈكلەۋاتقاندا خاتالىق خاتالىق كۆرۈلدى: %1 بوغچا مەۋجۇت ئەمەس."
 
-#: plasmaquick/configview.cpp:189
+#: plasmaquick/appletquickitem.cpp:623
+#, fuzzy, kde-format
+#| msgid "Error loading Applet: package %1 does not exist."
+msgctxt "@info"
+msgid ""
+"Error loading Applet: package format is invalid (does not contain any "
+"metadata)."
+msgstr "ئەپچە يۈكلەۋاتقاندا خاتالىق خاتالىق كۆرۈلدى: %1 بوغچا مەۋجۇت ئەمەس."
+
+#: plasmaquick/configview.cpp:194
 #, kde-format
 msgid "%1 — %2 Settings"
 msgstr "%1 — %2 تەڭشەك"
 
-#: plasmaquick/configview.cpp:190
+#: plasmaquick/configview.cpp:195
 #, kde-format
 msgid "%1 Settings"
 msgstr "%1 تەڭشەك"
 
-#: plasmaquick/plasmoid/containmentitem.cpp:569
+#: plasmaquick/plasmoid/containmentitem.cpp:574
 #, kde-format
 msgid "Plasma Package"
 msgstr "Plasma بوغچا"
 
-#: plasmaquick/plasmoid/containmentitem.cpp:573
+#: plasmaquick/plasmoid/containmentitem.cpp:578
 #, kde-format
 msgid "Install"
 msgstr "ئورنات"
 
-#: plasmaquick/plasmoid/containmentitem.cpp:584
+#: plasmaquick/plasmoid/containmentitem.cpp:589
 #, kde-format
 msgid "Package Installation Failed"
 msgstr "بوغچىنى ئورنىتالمىدى"
 
-#: plasmaquick/plasmoid/containmentitem.cpp:600
+#: plasmaquick/plasmoid/containmentitem.cpp:605
 #, kde-format
 msgid "The package you just dropped is invalid."
 msgstr "ھازىر سۆرەپ تاشلىغان بوغچا ئىناۋەتسىز."
 
-#: plasmaquick/plasmoid/containmentitem.cpp:609
+#: plasmaquick/plasmoid/containmentitem.cpp:614
 #, kde-format
 msgid "Widgets"
 msgstr "ئەپچە"
 
-#: plasmaquick/plasmoid/containmentitem.cpp:614
+#: plasmaquick/plasmoid/containmentitem.cpp:619
 #, kde-format
 msgctxt "Add widget"
 msgid "Add %1"
 msgstr "«%1» نى قوش"
 
-#: plasmaquick/plasmoid/containmentitem.cpp:628
+#: plasmaquick/plasmoid/containmentitem.cpp:633
 #, kde-format
 msgctxt "Add icon widget"
 msgid "Add Icon"
 msgstr "سىنبەلگە قوش"
 
-#: plasmaquick/plasmoid/containmentitem.cpp:640
+#: plasmaquick/plasmoid/containmentitem.cpp:645
 #, kde-format
 msgid "Wallpaper"
 msgstr "تام قەغەز"
 
-#: plasmaquick/plasmoid/containmentitem.cpp:650
+#: plasmaquick/plasmoid/containmentitem.cpp:655
 #, kde-format
 msgctxt "Set wallpaper"
 msgid "Set %1"

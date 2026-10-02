@@ -10,8 +10,6 @@
 
 #include "private/applet_p.h"
 
-#include <config-plasma.h>
-
 #include <QDebug>
 #include <QDir>
 #include <QFile>
@@ -91,7 +89,7 @@ void AppletPrivate::init(const QVariantList &args)
 {
     startupArguments = args;
 
-    // WARNING: do not access config() OR globalConfig() in this method!
+    // WARNING: do not access config() in this method!
     //          that requires a Corona, which is not available at this point
     q->setHasConfigurationInterface(true);
 
@@ -417,15 +415,6 @@ void AppletPrivate::setUiReady()
     }
 }
 
-QString AppletPrivate::globalName() const
-{
-    if (!appletDescription.isValid()) {
-        return QString();
-    }
-
-    return appletDescription.pluginId();
-}
-
 void AppletPrivate::scheduleConstraintsUpdate(Applet::Constraints c)
 {
     // Don't start up a timer if we're just starting up
@@ -459,21 +448,11 @@ KConfigGroup *AppletPrivate::mainConfigGroup()
         return mainConfig;
     }
 
-    Containment *c = q->containment();
-    Plasma::Applet *parentApplet = nullptr;
-    if (c) {
-        parentApplet = qobject_cast<Plasma::Applet *>(c->parent());
-    }
-
     if (q->isContainment() && static_cast<Containment *>(q)->containmentType() != Containment::CustomEmbedded) {
         Corona *corona = static_cast<Containment *>(q)->corona();
         KConfigGroup containmentConfig;
-        // qCDebug(LOG_PLASMA) << "got a corona, baby?" << (QObject*)corona << (QObject*)q;
 
-        if (parentApplet) {
-            containmentConfig = parentApplet->config();
-            containmentConfig = KConfigGroup(&containmentConfig, QStringLiteral("Containments"));
-        } else if (corona) {
+        if (corona) {
             containmentConfig = KConfigGroup(corona->config(), QStringLiteral("Containments"));
         } else {
             containmentConfig = KConfigGroup(KSharedConfig::openConfig(), QStringLiteral("Containments"));
@@ -483,9 +462,9 @@ KConfigGroup *AppletPrivate::mainConfigGroup()
     } else {
         KConfigGroup appletConfig;
 
-        if (c) {
+        if (q->containment()) {
             // applet directly in a Containment, as usual
-            appletConfig = c->config();
+            appletConfig = q->containment()->config();
             appletConfig = KConfigGroup(&appletConfig, QStringLiteral("Applets"));
         } else {
             qCDebug(LOG_PLASMA) << "requesting config for" << q->title() << "without a containment!";
@@ -493,11 +472,6 @@ KConfigGroup *AppletPrivate::mainConfigGroup()
         }
 
         mainConfig = new KConfigGroup(&appletConfig, QString::number(appletId));
-    }
-
-    if (configLoader) {
-        configLoader->setSharedConfig(KSharedConfig::openConfig(mainConfig->config()->name()));
-        configLoader->load();
     }
 
     return mainConfig;
