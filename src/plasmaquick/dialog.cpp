@@ -344,11 +344,11 @@ void DialogPrivate::updateTheme()
                                                  theme.backgroundSaturation(),
                                                  mask);
 
-        hasMask = true;
-        q->setMask(dialogBackground->mask());
-        if (q->isVisible()) {
-            DialogShadows::instance()->addWindow(q, dialogBackground->enabledBorders());
+        if (hasMask) {
+            hasMask = false;
+            q->setMask(QRegion());
         }
+        updateShadows();
     }
 }
 
@@ -839,32 +839,8 @@ void DialogPrivate::applyType()
         q->setFlags(flags);
     }
 
-<<<<<<< HEAD
     updateTheme();
 
-    if (KWindowSystem::isPlatformX11()) {
-        if (type == Dialog::Dock || type == Dialog::Notification || type == Dialog::OnScreenDisplay || type == Dialog::CriticalNotification) {
-            KX11Extras::setOnAllDesktops(q->winId(), true);
-        } else {
-            KX11Extras::setOnAllDesktops(q->winId(), false);
-        }
-    }
-
-=======
-    if (backgroundHints == Dialog::NoBackground) {
-        dialogBackground->setImagePath(QString());
-    } else {
-        auto prefix = QStringLiteral("");
-        if ((backgroundHints & Dialog::SolidBackground) == Dialog::SolidBackground) {
-            prefix = QStringLiteral("solid/");
-        }
-        if (type == Dialog::Tooltip) {
-            dialogBackground->setImagePath(prefix + QStringLiteral("widgets/tooltip"));
-        } else {
-            dialogBackground->setImagePath(prefix + QStringLiteral("dialogs/background"));
-        }
-    }
->>>>>>> upstream/Plasma/6.8
     PlasmaShellWaylandIntegration::get(q)->setTakesFocus(!q->flags().testFlag(Qt::WindowDoesNotAcceptFocus));
 }
 
@@ -1095,7 +1071,6 @@ QPoint Dialog::popupPosition(QQuickItem *item, const QSize &size)
         QQuickItem *parentItem = qobject_cast<QQuickItem *>(parent());
         if (parentItem) {
             QScreen *screen = parentItem->window()->screen();
-
             switch (d->location) {
             case Plasma::Types::TopEdge:
                 return QPoint(screen->availableGeometry().center().x() - size.width() / 2, screen->availableGeometry().y());
