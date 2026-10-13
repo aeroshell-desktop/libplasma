@@ -186,14 +186,6 @@ void ToolTipArea::showToolTip()
 
     dlg->setBackgroundHints(m_backgroundHints);
     dlg->setTitle(m_windowTitle); // Wayland sees this just fine
-    // Ugly hack to make this tooltip identifiable on X11
-    if (KWindowSystem::isPlatformX11() && m_backgroundHints == PlasmaQuick::PlasmaWindow::StandardBackground) {
-        Qt::WindowFlags flags = dlg->flags();
-        dlg->setFlags(flags | Qt::Dialog);
-    } else {
-        Qt::WindowFlags flags = dlg->flags();
-        dlg->setFlags((flags & ~Qt::Dialog) | Qt::ToolTip);
-    }
 
     dlg->setVisible(true);
     // In case the last owner triggered a dismiss but the dialog is still shown,
