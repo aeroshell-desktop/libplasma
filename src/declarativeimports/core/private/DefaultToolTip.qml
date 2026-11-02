@@ -49,6 +49,7 @@ Item {
             spacing: 0
 
             Kirigami.Heading {
+                id: heading
                 level: 5
                 Layout.fillWidth: true
                 elide: Text.ElideRight
@@ -56,7 +57,7 @@ Item {
                 text: root.toolTip ? root.toolTip.mainText : ""
                 textFormat: Text.PlainText
                 visible: text !== ""
-                opacity: 0.75
+                opacity: heading.visible ? 0.75 : 1
             }
 
             PlasmaComponents.Label {
@@ -64,7 +65,7 @@ Item {
                 wrapMode: Text.Wrap
                 text: root.toolTip ? root.toolTip.subText : ""
                 textFormat: root.toolTip ? root.toolTip.textFormat : Text.AutoText
-                opacity: 0.75
+                opacity: heading.visible? 0.75 : 1
                 visible: text !== ""
                 maximumLineCount: 8
             }

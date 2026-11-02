@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libplasma\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-26 03:00+0000\n"
-"PO-Revision-Date: 2026-09-26 09:42+0200\n"
+"POT-Creation-Date: 2026-10-29 03:08+0000\n"
+"PO-Revision-Date: 2026-10-28 09:16+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -91,18 +91,18 @@ msgstr "Desconegut"
 msgid "Activate %1 Widget"
 msgstr "Activa el giny %1"
 
-#: plasma/containment.cpp:102 plasma/private/applet_p.cpp:98
+#: plasma/containment.cpp:112 plasma/private/applet_p.cpp:98
 #, kde-format
 msgctxt "%1 is the name of the applet"
 msgid "Remove %1"
 msgstr "Elimina %1"
 
-#: plasma/containment.cpp:108 plasma/corona.cpp:314 plasma/corona.cpp:435
+#: plasma/containment.cpp:118 plasma/corona.cpp:314 plasma/corona.cpp:435
 #, kde-format
 msgid "Enter Edit Mode"
 msgstr "Entra en el mode d'edició"
 
-#: plasma/containment.cpp:111 plasma/private/applet_p.cpp:103
+#: plasma/containment.cpp:121 plasma/private/applet_p.cpp:103
 #, kde-format
 msgctxt "%1 is the name of the applet"
 msgid "Configure %1..."
@@ -283,6 +283,18 @@ msgstr "%1 — Configuració de %2"
 msgid "%1 Settings"
 msgstr "Configuració de %1"
 
+#: plasmaquick/containmentview.cpp:321
+#, kde-format
+msgctxt "Fatal error message: impossible to show panels or desktops"
+msgid "There was a problem loading %1. Please check your installation."
+msgstr ""
+"Hi ha hagut un problema en carregar %1. Comproveu aquesta instal·lació."
+
+#: plasmaquick/containmentview.cpp:323
+#, kde-format
+msgid "Error Starting Plasma"
+msgstr "Error en iniciar el Plasma"
+
 #: plasmaquick/plasmoid/containmentitem.cpp:574
 #, kde-format
 msgid "Plasma Package"
@@ -335,41 +347,3 @@ msgstr "Estableix el %1"
 #, kde-format
 msgid "Content dropped"
 msgstr "Contingut descartat"
-
-#~ msgid "Whether or not to create an on-disk cache for the theme."
-#~ msgstr ""
-#~ "Determina si s'ha de crear o no una memòria cau al disc per al tema."
-
-#~ msgid ""
-#~ "The maximum size of the on-disk Theme cache in kilobytes. Note that these "
-#~ "files are sparse files, so the maximum size may not be used. Setting a "
-#~ "larger size is therefore often quite safe."
-#~ msgstr ""
-#~ "La mida màxima de la memòria cau al disc per al tema en kilobytes. Cal "
-#~ "tenir en compte que aquests fitxers són fitxers dispersos, per tant, "
-#~ "gairebé no s'usarà la mida màxima. Per consegüent, es força segur definir "
-#~ "una mida gran."
-
-#~ msgid "Add Widgets..."
-#~ msgstr "Afegeix ginys..."
-
-#~ msgctxt "Package file, name of the widget"
-#~ msgid "Could not open the %1 package required for the %2 widget."
-#~ msgstr "No s'ha pogut obrir el paquet %1 requerit pel giny %2."
-
-#~ msgid ""
-#~ "Sharing a widget on the network allows you to access this widget from "
-#~ "another computer as a remote control."
-#~ msgstr ""
-#~ "La compartició d'un giny en la xarxa permet accedir-hi des de qualsevol "
-#~ "altre ordinador, com si es tractés d'un control remot."
-
-#~ msgid "Share this widget on the network"
-#~ msgstr "Comparteix aquest giny per la xarxa"
-
-#~ msgid "Allow everybody to freely access this widget"
-#~ msgstr "Permet a tothom l'accés lliure a aquest giny"
-
-#~ msgctxt "Error message, tried to start an invalid service"
-#~ msgid "Invalid (null) service, can not perform any operations."
-#~ msgstr "Servei no vàlid (nul), no pot executar cap operació."
